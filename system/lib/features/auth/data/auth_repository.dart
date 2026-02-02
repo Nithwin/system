@@ -25,6 +25,11 @@ class AuthRepository {
 
       final token = response.data['access_token'];
       await _storage.write(key: 'auth_token', value: token);
+    } on DioException catch (e) {
+      if (e.response != null && e.response!.data != null) {
+        throw Exception(e.response!.data['message'] ?? 'Login failed');
+      }
+      throw Exception('Login failed: ${e.message}');
     } catch (e) {
       throw Exception('Login failed: ${e.toString()}');
     }
@@ -43,5 +48,14 @@ class AuthRepository {
 
   Future<void> logout() async {
     await _storage.delete(key: 'auth_token');
+  }
+
+  Future<bool> hasToken() async {
+    final token = await _storage.read(key: 'auth_token');
+    return token != null && token.isNotEmpty;
+  }
+
+  Future<String?> getToken() async {
+    return await _storage.read(key: 'auth_token');
   }
 }

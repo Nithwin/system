@@ -15,6 +15,13 @@ class StatusRepository {
     try {
       final response = await _dio.get('/auth/profile');
       return response.data;
+    } on DioException catch (e) {
+      if (e.response != null && e.response!.data != null) {
+        throw Exception(
+          e.response!.data['message'] ?? 'Failed to fetch status',
+        );
+      }
+      throw Exception('Failed to fetch status: ${e.message}');
     } catch (e) {
       throw Exception('Failed to fetch status: ${e.toString()}');
     }

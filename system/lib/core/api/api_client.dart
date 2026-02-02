@@ -14,7 +14,7 @@ final dioProvider = Provider<Dio>((ref) {
   final dio = Dio(
     BaseOptions(
       baseUrl:
-          'http://10.0.2.2:3000', // 10.0.2.2 maps to localhost on Android Emulator
+          'http://192.168.137.1:3000', // Updated to Host IP for physical device/LAN access
       connectTimeout: const Duration(seconds: 10),
       receiveTimeout: const Duration(seconds: 10),
     ),
