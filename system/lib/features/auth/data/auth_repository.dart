@@ -41,6 +41,12 @@ class AuthRepository {
         '/auth/register',
         data: {'email': email, 'username': username, 'password': password},
       );
+    } on DioException catch (e) {
+      if (e.response != null && e.response!.data != null) {
+        final message = e.response!.data['message'];
+        throw Exception(message ?? 'Registration failed');
+      }
+      throw Exception('Registration failed: ${e.message}');
     } catch (e) {
       throw Exception('Registration failed: ${e.toString()}');
     }

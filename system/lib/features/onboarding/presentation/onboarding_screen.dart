@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:system/core/presentation/main_scaffold.dart';
 import 'package:system/features/auth/presentation/auth_state_provider.dart';
 import 'package:system/features/onboarding/data/assessment_repository.dart';
+import 'package:system/features/onboarding/presentation/steps/daily_routine_step.dart';
 import 'package:system/features/onboarding/presentation/steps/essence_scan_step.dart';
 import 'package:system/features/onboarding/presentation/steps/mental_audit_step.dart';
 import 'package:system/features/onboarding/presentation/steps/physical_baseline_step.dart';
@@ -18,7 +19,7 @@ class OnboardingScreen extends ConsumerStatefulWidget {
 class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
   final PageController _pageController = PageController();
   int _currentStep = 0;
-  final int _totalSteps = 3;
+  final int _totalSteps = 4;
 
   // Step 1 Controllers
   String? _selectedGender;
@@ -32,6 +33,10 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
   final TextEditingController _situpsController = TextEditingController();
 
   // Step 3 Controllers
+  final TextEditingController _hoursController = TextEditingController();
+  final TextEditingController _sleepController = TextEditingController();
+
+  // Step 4 Controllers
   String? _selectedGoal;
   final TextEditingController _codingProfilesController =
       TextEditingController();
@@ -52,6 +57,8 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
     _pushupsController.dispose();
     _squatsController.dispose();
     _situpsController.dispose();
+    _hoursController.dispose();
+    _sleepController.dispose();
     _codingProfilesController.dispose();
     _knownLanguagesController.dispose();
     super.dispose();
@@ -77,17 +84,37 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
     try {
       final assessmentRepo = ref.read(assessmentRepositoryProvider);
 
+      final habits = <String>[];
+      if (_hoursController.text.isNotEmpty) {
+        habits.add('Availability: ${_hoursController.text} hours');
+      }
+      if (_sleepController.text.isNotEmpty) {
+        habits.add('Sleep: ${_sleepController.text} hours');
+      }
+
       final data = {
-        'gender': _selectedGender,
+        'gender': _selectedGender ?? 'Male',
         'dob': _dobController.text,
-        'height': _heightController.text,
-        'weight': _weightController.text,
-        'pushups': _pushupsController.text,
-        'squats': _squatsController.text,
-        'situps': _situpsController.text,
-        'goal': _selectedGoal,
-        'languages': _knownLanguagesController.text,
-        'profiles': _codingProfilesController.text,
+        'height': double.tryParse(_heightController.text) ?? 0,
+        'weight': double.tryParse(_weightController.text) ?? 0,
+        'pushups': int.tryParse(_pushupsController.text) ?? 0,
+        'squats': int.tryParse(_squatsController.text) ?? 0,
+        'situps': int.tryParse(_situpsController.text) ?? 0,
+        'goal': _selectedGoal ?? 'Strength',
+        'languages': _knownLanguagesController.text
+            .split(',')
+            .where((e) => e.trim().isNotEmpty)
+            .map((e) => e.trim())
+            .toList(),
+        'profiles': _codingProfilesController.text
+            .split(',')
+            .where((e) => e.trim().isNotEmpty)
+            .map((e) => e.trim())
+            .toList(),
+        'healthIssues': [],
+        'habits': habits,
+        'selfRating': 5,
+        'profileLinks': [],
       };
 
       await assessmentRepo.submitAssessment(data);
@@ -166,6 +193,10 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                         pushupsController: _pushupsController,
                         squatsController: _squatsController,
                         situpsController: _situpsController,
+                      ),
+                      DailyRoutineStep(
+                        hoursController: _hoursController,
+                        sleepController: _sleepController,
                       ),
                       MentalAuditStep(
                         selectedGoal: _selectedGoal,

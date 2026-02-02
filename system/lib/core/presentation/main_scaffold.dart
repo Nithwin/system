@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:system/features/status/presentation/status_screen.dart';
+import 'package:system/features/quests/presentation/quest_screen.dart';
 
 class MainScaffold extends ConsumerStatefulWidget {
   const MainScaffold({super.key});
@@ -21,9 +22,7 @@ class _MainScaffoldState extends ConsumerState<MainScaffold> {
 
   final List<Widget> _screens = [
     const StatusScreen(), // Home / Status
-    const Center(
-      child: Text('QUESTS', style: TextStyle(color: Colors.white)),
-    ), // Placeholder
+    const QuestScreen(), // Quest List
     const Center(
       child: Text('INVENTORY', style: TextStyle(color: Colors.white)),
     ), // Placeholder

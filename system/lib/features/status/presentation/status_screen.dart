@@ -173,8 +173,35 @@ class StatusScreen extends ConsumerWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
+              // Avatar
+              Container(
+                width: 60,
+                height: 60,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(color: _accentPurple, width: 2),
+                  boxShadow: [
+                    BoxShadow(
+                      color: _neonPurple.withValues(alpha: 0.3),
+                      blurRadius: 10,
+                    ),
+                  ],
+                  // image: DecorationImage removed - asset missing
+                ),
+                child: Center(
+                  child: Text(
+                    data['username']?.substring(0, 1).toUpperCase() ?? 'H',
+                    style: GoogleFonts.orbitron(
+                      color: Colors.white,
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(width: 16),
+              // Name & Level
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -191,7 +218,7 @@ class StatusScreen extends ConsumerWidget {
                     Text(
                       data['username']?.toUpperCase() ?? 'UNKNOWN',
                       style: GoogleFonts.orbitron(
-                        fontSize: 24,
+                        fontSize: 20,
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
                         letterSpacing: 1,
@@ -200,23 +227,62 @@ class StatusScreen extends ConsumerWidget {
                   ],
                 ),
               ),
-              Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 12,
-                  vertical: 6,
-                ),
-                decoration: BoxDecoration(
-                  color: _neonPurple.withValues(alpha: 0.2),
-                  borderRadius: BorderRadius.circular(8),
-                  border: Border.all(color: _neonPurple.withValues(alpha: 0.5)),
-                ),
-                child: Text(
-                  'LVL ${data['level'] ?? 1}',
-                  style: GoogleFonts.orbitron(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16,
+              Column(
+                children: [
+                  Text(
+                    'LEVEL',
+                    style: GoogleFonts.rajdhani(
+                      color: _accentPurple,
+                      fontSize: 10,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
+                  Text(
+                    '${data['level'] ?? 1}',
+                    style: GoogleFonts.orbitron(
+                      color: AppTheme.gold,
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+          const SizedBox(height: 20),
+          // XP Bar
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'EXPERIENCE',
+                    style: GoogleFonts.rajdhani(
+                      color: Colors.white.withValues(alpha: 0.7),
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Text(
+                    '${data['xp'] ?? 0} / 1000', // Mock max XP
+                    style: GoogleFonts.rajdhani(
+                      color: Colors.white,
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 8),
+              ClipRRect(
+                borderRadius: BorderRadius.circular(4),
+                child: LinearProgressIndicator(
+                  value: ((data['xp'] ?? 0) / 1000).clamp(0.0, 1.0),
+                  backgroundColor: Colors.black.withValues(alpha: 0.5),
+                  valueColor: const AlwaysStoppedAnimation<Color>(_neonPurple),
+                  minHeight: 6,
                 ),
               ),
             ],

@@ -14,7 +14,7 @@ final dioProvider = Provider<Dio>((ref) {
   final dio = Dio(
     BaseOptions(
       baseUrl:
-          'http://192.168.137.1:3000', // Updated to Host IP for physical device/LAN access
+          'http://10.79.119.103:3000', // Updated to current Host IP for physical device access
       connectTimeout: const Duration(seconds: 10),
       receiveTimeout: const Duration(seconds: 10),
     ),
