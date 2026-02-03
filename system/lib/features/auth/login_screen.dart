@@ -42,7 +42,10 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
       // Refresh auth state to trigger redirect logic
       await ref.read(authStateProvider.notifier).refresh();
 
-      // Navigation is handled by AuthCheckScreen in main.dart
+      if (mounted) {
+        // Pop the LoginScreen to reveal the MainScaffold
+        Navigator.pop(context);
+      }
     } catch (e) {
       if (mounted) {
         final errorMessage = e.toString().replaceAll('Exception: ', '');
@@ -78,7 +81,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                 Text(
                   'SYSTEM ACCESS',
                   style: GoogleFonts.orbitron(
-                    fontSize: 32,
+                    fontSize: 26, // Reduced from 32
                     fontWeight: FontWeight.bold,
                     color: Colors.white,
                     letterSpacing: 3,
@@ -171,7 +174,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                               : Text(
                                   'LOG IN',
                                   style: GoogleFonts.orbitron(
-                                    fontSize: 16,
+                                    fontSize: 14, // Reduced from 16
                                     fontWeight: FontWeight.bold,
                                     color: Colors.white,
                                     letterSpacing: 2,
@@ -193,7 +196,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                           },
                           child: RichText(
                             text: TextSpan(
-                              style: GoogleFonts.rajdhani(fontSize: 16),
+                              style: GoogleFonts.rajdhani(
+                                fontSize: 14,
+                              ), // Reduced from 16
                               children: [
                                 TextSpan(
                                   text: "Don't have an account? ",
@@ -228,7 +233,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     return Text(
       label,
       style: GoogleFonts.orbitron(
-        fontSize: 12,
+        fontSize: 10, // Reduced from 12
         fontWeight: FontWeight.bold,
         color: _accentPurple,
         letterSpacing: 1,

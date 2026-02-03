@@ -13,8 +13,7 @@ final dioProvider = Provider<Dio>((ref) {
 
   final dio = Dio(
     BaseOptions(
-      baseUrl:
-          'http://10.79.119.103:3000', // Updated to current Host IP for physical device access
+      baseUrl: 'http://127.0.0.1:3000', // Using ADB Reverse (Wired Connection)
       connectTimeout: const Duration(seconds: 10),
       receiveTimeout: const Duration(seconds: 10),
     ),

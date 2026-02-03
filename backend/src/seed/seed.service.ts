@@ -28,12 +28,12 @@ export class SeedService implements OnModuleInit {
       {
         title: 'Pushup Mastery I',
         description:
-          'Complete 50 Pushups. Failure to complete will result in a penalty.',
+          'Complete 10 Pushups. Failure to complete will result in a penalty.',
         type: QuestType.DAILY,
         difficulty: QuestDifficulty.E,
         requirements: {
           type: 'pushups',
-          count: 50,
+          count: 10,
           verificationMethod: 'manual',
         },
         rewards: { xp: 50, stats: { str: 1 } },

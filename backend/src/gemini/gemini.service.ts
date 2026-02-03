@@ -36,11 +36,19 @@ export class GeminiService {
       You are the "System" from Solo Leveling. Generate a daily quest for a hunter with the following attributes:
       ${JSON.stringify(userStats)}
 
+      CRITICAL DIFFICULTY SCALING:
+      - Rank E: VERY EASY (10-20 reps/meters). Beginner level.
+      - Rank D: EASY (20-50 reps).
+      - Rank C: MODERATE (50-100 reps).
+      - Rank B: HARD (100-200 reps).
+      - Rank A: EXPERT (200-500 reps).
+      - Rank S: GODLY (500+ reps).
+
       The quest MUST follow this JSON format exactly:
       {
         "title": "Quest Title",
         "description": "Flavor text in a cold, authoritative system tone",
-        "objectives": ["Objective 1", "Objective 2"],
+        "objectives": ["Objective 1 (Count: X)", "Objective 2"],
         "rewards": ["Reward 1 (+XP)", "Reward 2"],
         "penalty": "Description of what happens if they fail",
         "difficulty": "E | D | C | B | A | S"
