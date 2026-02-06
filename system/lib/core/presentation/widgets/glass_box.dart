@@ -9,6 +9,7 @@ class GlassBox extends StatelessWidget {
   final EdgeInsetsGeometry? padding;
   final EdgeInsetsGeometry? margin;
   final Color? color;
+  final Color? borderColor;
 
   const GlassBox({
     super.key,
@@ -19,6 +20,7 @@ class GlassBox extends StatelessWidget {
     this.padding,
     this.margin,
     this.color,
+    this.borderColor,
   });
 
   @override
@@ -37,7 +39,7 @@ class GlassBox extends StatelessWidget {
               color: (color ?? Colors.white).withOpacity(0.05),
               borderRadius: borderRadius ?? BorderRadius.circular(16),
               border: Border.all(
-                color: Colors.white.withOpacity(0.2),
+                color: borderColor ?? Colors.white.withOpacity(0.2),
                 width: 1,
               ),
             ),

@@ -10,6 +10,7 @@ import 'package:system/features/status/presentation/widgets/edit_profile_dialog.
 import 'dart:async';
 
 import 'package:system/features/status/domain/user_model.dart';
+import 'package:system/features/dungeon/presentation/dungeon_gate_screen.dart';
 
 class StatusScreen extends ConsumerStatefulWidget {
   const StatusScreen({super.key});
@@ -328,14 +329,7 @@ class _StatusScreenState extends ConsumerState<StatusScreen> {
           const SizedBox(height: 40),
 
           // 5. Time Remaining (Penalty Zone)
-           Container(
-            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
-            decoration: BoxDecoration(
-              border: Border.all(color: _alertRed.withOpacity(0.5)),
-              borderRadius: BorderRadius.circular(8),
-              color: _alertRed.withOpacity(0.05),
-            ),
-            child: Row(
+            Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
@@ -357,7 +351,51 @@ class _StatusScreenState extends ConsumerState<StatusScreen> {
                 ),
               ],
             ),
+
+          
+          const SizedBox(height: 24),
+
+          // 6. Dungeon Gate Button
+          GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const DungeonGateScreen()),
+              );
+            },
+            child: Container(
+              width: double.infinity,
+              padding: const EdgeInsets.symmetric(vertical: 20),
+              decoration: BoxDecoration(
+                color: const Color(0xFF2D0A0A), // Dark Red
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(color: Colors.redAccent, width: 2),
+                boxShadow: [
+                   BoxShadow(color: Colors.redAccent.withOpacity(0.4), blurRadius: 20, spreadRadius: 2),
+                ],
+              ),
+              child: Column(
+                children: [
+                  const Icon(Icons.vpn_key, color: Colors.redAccent, size: 32),
+                  const SizedBox(height: 8),
+                  Text(
+                    "ENTER GATE",
+                    style: GoogleFonts.orbitron(
+                      color: Colors.redAccent, 
+                      fontSize: 20, 
+                      fontWeight: FontWeight.bold, 
+                      letterSpacing: 4
+                    ),
+                  ),
+                  Text(
+                    "Instance Dungeon detected",
+                    style: GoogleFonts.rajdhani(color: Colors.white54, fontSize: 12),
+                  ),
+                ],
+              ),
+            ),
           ),
+          const SizedBox(height: 40),
         ],
       ),
     );

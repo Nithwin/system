@@ -5,6 +5,7 @@ import 'package:system/features/quests/presentation/quest_controller.dart';
 import 'package:system/features/status/presentation/status_controller.dart';
 import 'package:system/features/quests/domain/quest_model.dart';
 import 'package:system/core/presentation/widgets/glass_box.dart';
+import 'package:system/features/quests/presentation/quest_detail_screen.dart';
 import 'dart:ui'; 
 
 class QuestBoard extends ConsumerWidget {
@@ -167,13 +168,11 @@ class QuestBoard extends ConsumerWidget {
           color: Colors.transparent,
           child: InkWell(
             onTap: () {
-              ref.read(questControllerProvider.notifier).toggleQuest(quest.id);
-              ScaffoldMessenger.of(context).showSnackBar(
-                 SnackBar(
-                    content: Text("Rank ${quest.difficulty} Cleared! +${quest.xp} XP", style: GoogleFonts.orbitron()),
-                    backgroundColor: rankColor,
-                    duration: const Duration(milliseconds: 1000),
-                 )
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => QuestDetailScreen(quest: quest),
+                ),
               );
             },
             borderRadius: BorderRadius.circular(12),

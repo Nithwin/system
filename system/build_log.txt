@@ -1,0 +1,65 @@
+Running Gradle task 'assembleDebug'...                          
+lib/features/status/presentation/status_screen.dart:150:19: Error: Can't find ']' to match '['.
+        children: [
+                  ^
+lib/features/status/presentation/status_screen.dart:332:18: Error: Expected ')' before this.
+            child: Row(
+                 ^
+lib/features/status/presentation/status_screen.dart:399:9: Error: Expected an identifier, but got ']'.
+Try inserting an identifier before ']'.
+        ],
+        ^
+lib/features/status/presentation/status_screen.dart:399:9: Error: Expected ')' before this.
+        ],
+        ^
+lib/features/status/presentation/status_screen.dart:146:33: Error: Too many positional arguments: 0 allowed, but 4 found.
+Try removing the extra positional arguments.
+    return SingleChildScrollView(
+                                ^
+/C:/Users/Mahendhiran/Downloads/flutter/packages/flutter/lib/src/widgets/single_child_scroll_view.dart:149:9: Context: Found this candidate, but the arguments don't match.
+  const SingleChildScrollView({
+        ^^^^^^^^^^^^^^^^^^^^^
+lib/features/status/presentation/status_screen.dart:400:7: Error: Expected ';' after this.
+      ),
+      ^
+lib/features/status/presentation/status_screen.dart:400:8: Error: Expected an identifier, but got ','.
+Try inserting an identifier before ','.
+      ),
+       ^
+lib/features/status/presentation/status_screen.dart:400:8: Error: Unexpected token ';'.
+      ),
+       ^
+lib/features/status/presentation/status_screen.dart:401:5: Error: Expected an identifier, but got ')'.
+Try inserting an identifier before ')'.
+    );
+    ^
+lib/features/status/presentation/status_screen.dart:400:8: Error: Expected ';' after this.
+      ),
+       ^
+lib/features/status/presentation/status_screen.dart:401:5: Error: Unexpected token ';'.
+    );
+    ^
+lib/features/dungeon/presentation/dungeon_gate_screen.dart:76:9: Error: No named parameter with the name 'borderColor'.
+        borderColor: Colors.redAccent.withOpacity(0.5),
+        ^^^^^^^^^^^
+lib/core/presentation/widgets/glass_box.dart:13:9: Context: Found this candidate, but the arguments don't match.
+  const GlassBox({
+        ^^^^^^^^
+Target kernel_snapshot_program failed: Exception
+
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':app:compileFlutterBuildDebug'.
+> Process 'command 'C:\Users\Mahendhiran\Downloads\flutter\bin\flutter.bat'' finished with non-zero exit value 1
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights.
+> Get more help at https://help.gradle.org.
+
+BUILD FAILED in 8s
+Running Gradle task 'assembleDebug'...                              9.1s
+Gradle task assembleDebug failed with exit code 1

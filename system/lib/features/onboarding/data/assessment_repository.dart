@@ -13,7 +13,11 @@ class AssessmentRepository {
 
   Future<void> submitAssessment(Map<String, dynamic> data) async {
     try {
-      await _dio.post('/assessment/submit', data: data);
+      final payload = {
+        'type': 'ONBOARDING',
+        'data': data,
+      };
+      await _dio.post('/assessment/submit', data: payload);
     } on DioException catch (e) {
       if (e.response != null && e.response!.data != null) {
         throw Exception(
