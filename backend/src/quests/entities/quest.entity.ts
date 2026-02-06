@@ -11,6 +11,7 @@ export enum QuestType {
   WEEKLY = 'WEEKLY',
   PENALTY = 'PENALTY',
   HIDDEN = 'HIDDEN',
+  DUNGEON = 'DUNGEON',
 }
 
 export enum QuestDifficulty {

@@ -113,8 +113,12 @@ export class QuestsService {
       console.log('Failed to fetch LeetCode', e);
     }
 
+    // Fetch Dungeon Quests from DB
+    const dungeons = await this.questRepository.find({ where: { type: 'DUNGEON' } as any });
+
     // Build Quest List (Dynamic)
     return [
+      ...dungeons,
       {
         id: 'daily_phys_1',
         title: 'Strength Training',

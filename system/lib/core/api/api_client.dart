@@ -13,7 +13,7 @@ final dioProvider = Provider<Dio>((ref) {
 
   final dio = Dio(
     BaseOptions(
-      baseUrl: 'http://10.117.33.236:3000', // Using Wireless LAN adapter IP
+      baseUrl: 'http://172.18.32.215:3000', // Using Ethernet adapter IP
       connectTimeout: const Duration(seconds: 30),
       receiveTimeout: const Duration(seconds: 30),
     ),

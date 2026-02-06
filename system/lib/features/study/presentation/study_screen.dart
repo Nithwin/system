@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:system/core/presentation/widgets/glass_box.dart';
+import 'package:system/features/study/presentation/focus_session_provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class StudyScreen extends ConsumerWidget {
@@ -12,6 +13,14 @@ class StudyScreen extends ConsumerWidget {
     if (!await launchUrl(uri)) {
       throw Exception('Could not launch $url');
     }
+  }
+
+  String _formatDuration(Duration duration) {
+    String twoDigits(int n) => n.toString().padLeft(2, '0');
+    final hours = twoDigits(duration.inHours);
+    final minutes = twoDigits(duration.inMinutes.remainder(60));
+    final seconds = twoDigits(duration.inSeconds.remainder(60));
+    return "$hours:$minutes:$seconds";
   }
 
   @override
@@ -38,12 +47,51 @@ class StudyScreen extends ConsumerWidget {
                                const SizedBox(height: 8),
                                Text("FOCUS SESSION", style: GoogleFonts.orbitron(color: Colors.white, fontSize: 18)),
                                const SizedBox(height: 16),
-                               Text("00:00:00", style: GoogleFonts.orbitron(color: Colors.white, fontSize: 40, letterSpacing: 4)),
+                               
+                               // Timer Display
+                               Text(
+                                 _formatDuration(ref.watch(focusSessionProvider).duration),
+                                 style: GoogleFonts.orbitron(color: Colors.white, fontSize: 40, letterSpacing: 4),
+                               ),
                                const SizedBox(height: 16),
-                               ElevatedButton(
-                                  onPressed: () {}, // TODO: Implement Timer Logic
-                                  style: ElevatedButton.styleFrom(backgroundColor: Colors.cyanAccent),
-                                  child: Text("START", style: GoogleFonts.rajdhani(color: Colors.black, fontWeight: FontWeight.bold)),
+                               
+                               Row(
+                                 mainAxisAlignment: MainAxisAlignment.center,
+                                 children: [
+                                   // Start/Pause/Resume Button
+                                   ElevatedButton(
+                                      onPressed: () {
+                                        final notifier = ref.read(focusSessionProvider.notifier);
+                                        final isRunning = ref.read(focusSessionProvider).isRunning;
+                                        if (isRunning) {
+                                          notifier.pause();
+                                        } else {
+                                          notifier.start();
+                                        }
+                                      },
+                                      style: ElevatedButton.styleFrom(
+                                        backgroundColor: ref.watch(focusSessionProvider).isRunning ? Colors.orangeAccent : Colors.cyanAccent,
+                                      ),
+                                      child: Text(
+                                        ref.watch(focusSessionProvider).isRunning 
+                                            ? "PAUSE" 
+                                            : (ref.watch(focusSessionProvider).duration.inSeconds > 0 ? "RESUME" : "START"),
+                                        style: GoogleFonts.rajdhani(color: Colors.black, fontWeight: FontWeight.bold),
+                                      ),
+                                   ),
+
+                                   // Reset Button (Only visible when paused and duration > 0)
+                                   if (!ref.watch(focusSessionProvider).isRunning && ref.watch(focusSessionProvider).duration.inSeconds > 0) ...[
+                                      const SizedBox(width: 16),
+                                      IconButton(
+                                        onPressed: () {
+                                          ref.read(focusSessionProvider.notifier).reset();
+                                        },
+                                        icon: const Icon(Icons.refresh, color: Colors.redAccent),
+                                        tooltip: "Reset Timer",
+                                      ),
+                                   ],
+                                 ],
                                ),
                             ],
                          ),
